@@ -39,11 +39,9 @@ app.get('/data/esp32', (req, res) => {
 
 app.post('/data/esp32', (req, res)=>{
   const db = fire.firestore();
-  var d= new Date();
-  const datee=(d.getDate());
-  const monthh=(d.getMonth()+1)
-  const yearr=(d.getFullYear())
-
+  var date= new Date();
+  var d = date.toLocaleDateString('en-US',{timeZone:'Asia/Calcutta'});
+  var t = date.toLocaleTimeString('en-US',{timeZone:'Asia/Calcutta'});
 
 	db.settings({
       timestampsInSnapshots: true
@@ -52,19 +50,15 @@ app.post('/data/esp32', (req, res)=>{
       temperature: req.body.temp,
       ph_value: req.body.ph_val,
       turbidity: req.body.turbi,
-      // Date: new Date()
-      Date : datee,
-      Month:monthh,
-      Year:yearr
-
+      date: d,
+      time:t
     });
     res.send({
       temperature: req.body.temp,
       ph_value: req.body.ph_val,
       turbidity: req.body.turbi,
-      Date: new Date().getDate(), 
-      Month:new Date().getMonth(),
-      Year:new Date().getYear(),
+      date: d,
+      time: t,
       status: 'POST data success!'
   })
 })
